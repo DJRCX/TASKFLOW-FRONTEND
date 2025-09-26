@@ -1,0 +1,28 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "email": "admin@acme.com",
+      "password": "admin123",
+      "role": "admin",
+      "name": "Admin User"
+    },
+    {
+      "id": "2",
+      "email": "member@acme.com",
+      "password": "member123",
+      "role": "member",
+      "name": "Member User"
+    }
+  ],
+  "workspaces": [
+    { "id": 1, "name": "Engineering", "members": ["1", "2"] },
+    { "id": 2, "name": "Marketing", "members": ["2"] },
+    { "id": 3, "name": "asdad", "members": ["1"] }
+  ],
+  "projects": [
+    { "id": 1, "name": "Website Redesign", "workspaceId": 1 },
+    { "id": 2, "name": "Mobile App", "workspaceId": 1 },
+    { "id": 3, "name": "Campaign", "workspaceId": 2 }
+  ]
+}

@@ -1,0 +1,93 @@
+/* Basic reset */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Page wrapper */
+.auth-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background: linear-gradient(135deg, #4f46e5, #9333ea);
+}
+
+/* Card box */
+.auth-box {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.15);
+  width: 100%;
+  max-width: 400px;
+  text-align: center;
+  animation: fadeIn 0.5s ease-in-out;
+}
+
+/* Title */
+.auth-box h2 {
+  margin-bottom: 1.5rem;
+  color: #333;
+}
+
+/* Input fields */
+.auth-box input {
+  width: 100%;
+  padding: 12px;
+  margin: 0.6rem 0;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  outline: none;
+  transition: border 0.3s;
+}
+.auth-box input:focus {
+  border-color: #4f46e5;
+}
+
+/* Buttons */
+.auth-box button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 1rem;
+  background: #4f46e5;
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+.auth-box button:hover {
+  background: #4338ca;
+}
+
+/* Footer link */
+.auth-box p {
+  margin-top: 1rem;
+  font-size: 0.9rem;
+  color: #666;
+}
+.auth-box a {
+  color: #4f46e5;
+  text-decoration: none;
+  font-weight: 600;
+}
+.auth-box a:hover {
+  text-decoration: underline;
+}
+
+/* Animation */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
