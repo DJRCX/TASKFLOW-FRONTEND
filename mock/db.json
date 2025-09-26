@@ -13,16 +13,62 @@
       "password": "member123",
       "role": "member",
       "name": "Member User"
+    },
+    {
+      "id": "bd4e",
+      "email": "mahtabulalnahian@gmail.com",
+      "password": "1234",
+      "role": "member",
+      "name": "Mahtabul Al Nahian"
     }
   ],
   "workspaces": [
-    { "id": 1, "name": "Engineering", "members": ["1", "2"] },
-    { "id": 2, "name": "Marketing", "members": ["2"] },
-    { "id": 3, "name": "asdad", "members": ["1"] }
+    {
+      "id": "1",
+      "name": "Engineering",
+      "members": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "id": "2",
+      "name": "Marketing",
+      "members": [
+        "1",
+        "2"
+      ]
+    },
+    {
+      "id": "6892",
+      "name": "asds",
+      "members": [
+        "2",
+        "bd4e",
+        "1"
+      ]
+    }
   ],
   "projects": [
-    { "id": 1, "name": "Website Redesign", "workspaceId": 1 },
-    { "id": 2, "name": "Mobile App", "workspaceId": 1 },
-    { "id": 3, "name": "Campaign", "workspaceId": 2 }
+    {
+      "id": "1",
+      "name": "Website Redesign",
+      "workspaceId": 1
+    },
+    {
+      "id": "2",
+      "name": "Mobile App",
+      "workspaceId": 1
+    },
+    {
+      "id": "3",
+      "name": "Campaign",
+      "workspaceId": 2
+    },
+    {
+      "id": "5390",
+      "name": "sss",
+      "workspaceId": 6892
+    }
   ]
 }

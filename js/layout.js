@@ -80,6 +80,7 @@ async function loadLayout(activePage) {
         <h3 id="modal-title">Create</h3>
         <input id="modal-input" type="text" placeholder="Enter name" />
         <select id="workspace-select" class="hidden"></select>
+        <select id="workspace-members" class="hidden" multiple size="5"></select>
         <div class="modal-actions">
           <button onclick="closeModal()">Cancel</button>
           <button onclick="submitCreate()">Create</button>
@@ -102,8 +103,9 @@ async function loadSidebarData() {
 
     const allWorkspaces = await apiFetch("/workspaces");
     const allProjects = await apiFetch("/projects");
+    const allUsers = await apiFetch("/users"); // 🔹 fetch all users
 
-    // Workspaces where the user is a member
+    // Only get workspaces where the user is a member
     const myWorkspaces = allWorkspaces.filter((ws) =>
       (ws.members || []).map(String).includes(String(user.id))
     );
@@ -132,8 +134,17 @@ async function loadSidebarData() {
         .join("");
     }
 
-    // Debug logs
-    console.log("User:", user.id, "Role:", user.role);
+    // 🔹 Populate members dropdown (for admin creating workspace)
+    const membersSelect = document.getElementById("workspace-members");
+    if (membersSelect && user.role === "admin") {
+      membersSelect.innerHTML = allUsers
+        .filter((u) => u.role !== "admin") // exclude admins
+        .map((u) => `<option value="${u.id}">${u.name}</option>`)
+        .join("");
+    }
+
+    // Debugging logs
+    console.log("User:", user.id, user.role);
     console.log("My Workspaces:", myWorkspaces);
     console.log("All Projects:", allProjects);
     console.log("Filtered Projects:", myProjects);
@@ -146,6 +157,8 @@ async function loadSidebarData() {
 let currentType = null;
 function openCreateModal(type) {
   const user = JSON.parse(localStorage.getItem("user") || "{}");
+
+  // ✅ Only allow admins to create
   if (user.role !== "admin") {
     return alert("Only admins can create " + type);
   }
@@ -154,10 +167,19 @@ function openCreateModal(type) {
   document.getElementById("modal-title").innerText = `Create ${type}`;
   document.getElementById("modal-input").value = "";
 
-  // Show workspace select only when creating a project
+  // ✅ Show/hide dropdowns depending on type
   const wsSelect = document.getElementById("workspace-select");
-  wsSelect.classList.toggle("hidden", type !== "project");
+  const membersSelect = document.getElementById("workspace-members");
 
+  if (wsSelect) {
+    wsSelect.classList.toggle("hidden", type !== "project");
+  }
+
+  if (membersSelect) {
+    membersSelect.classList.toggle("hidden", type !== "workspace");
+  }
+
+  // ✅ Show modal
   document.getElementById("createModal").classList.remove("hidden");
 }
 
@@ -176,9 +198,22 @@ async function submitCreate() {
 
   try {
     if (currentType === "workspace") {
+      const user = JSON.parse(localStorage.getItem("user"));
+
+      // 🔹 Collect all selected members
+      const membersSelect = document.getElementById("workspace-members");
+      const selectedMembers = Array.from(membersSelect.selectedOptions).map(
+        (opt) => opt.value
+      );
+
+      // Always include creator (admin) as well
+      if (!selectedMembers.includes(user.id)) {
+        selectedMembers.push(user.id);
+      }
+
       await apiFetch("/workspaces", {
         method: "POST",
-        body: JSON.stringify({ name, members: [user.id] }),
+        body: JSON.stringify({ name, members: selectedMembers }),
       });
     } else if (currentType === "project") {
       const workspaceId = parseInt(
@@ -196,7 +231,7 @@ async function submitCreate() {
     }
 
     closeModal();
-    await loadSidebarData();
+    await loadSidebarData(); // refresh list
   } catch (err) {
     console.error("Failed to create", err);
     alert("Error creating " + currentType);

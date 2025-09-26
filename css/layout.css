@@ -190,6 +190,15 @@
   border-radius: 8px;
   margin-bottom: 1rem;
 }
+
+.modal-content select {
+  width: 100%;
+  padding: 8px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 1rem;
+}
+
 .modal-actions {
   display: flex;
   justify-content: space-between;
@@ -206,4 +215,9 @@
 .modal-actions button:last-child {
   background: #4f46e5;
   color: #fff;
+}
+
+#workspace-members {
+  width: 100%;
+  height: 100px; /* so you can see multiple options */
 }
